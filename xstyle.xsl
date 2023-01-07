@@ -22,9 +22,18 @@
                   <span class="course-card-id">
                     <xsl:value-of select="crse" />
                   </span>
-                  <span class="course-card-credits">
-                    <xsl:value-of select="units" />
-                  </span>
+                  <xsl:choose>
+                    <xsl:when test="units = 0.0">
+                      <span class="course-card-credits">
+                        1.0
+                      </span>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <span class="course-card-credits">
+                        <xsl:value-of select="units" />
+                      </span>
+                    </xsl:otherwise>
+                  </xsl:choose>
                 </div>
               </div>
               <div class="course-card-footer">
