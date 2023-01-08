@@ -3,9 +3,47 @@
   <xsl:template match="/root">
     <html>
       <body>
-        <h1>Courses</h1>
-        <section class="courses-container">
 
+      <select id='suject-sel'>
+        <option value='All'>All</option>
+        <xsl:for-each select="course">
+          <xsl:sort select="@subj" />
+          <xsl:if test="not(preceding-sibling::course[subj = current()/subj])">
+
+            <option value='{subj}'>
+              <xsl:value-of select="subj" />
+            </option>
+          </xsl:if>
+        </xsl:for-each>
+      </select>
+
+      <select id='instructor-sel'>
+        <option value='All'>All</option>
+        <xsl:for-each select="course">
+          <xsl:sort select="@instructor" />
+          <xsl:if test="not(preceding-sibling::course[instructor = current()/instructor])">
+            <option value='{instructor}'>
+              <xsl:value-of select="instructor" />
+            </option>
+          </xsl:if>
+        </xsl:for-each>
+      </select>
+
+      <select id='units-sel'>
+        <option value='All'>All</option>
+        <xsl:for-each select="course">
+          <xsl:sort select="@units" />
+          <xsl:if test="not(preceding-sibling::course[units = current()/units])">
+            <option value='{units}'>
+              <xsl:value-of select="units" />
+            </option>
+          </xsl:if>
+        </xsl:for-each>
+      </select>
+
+      <button onclick="openSearch()">Filtrar</button>
+
+        <section class="courses-container">
           <xsl:for-each select="course">
             <div class="course-card">
               <div class="course-card-header">
@@ -18,7 +56,7 @@
                 <span class="course-card-title">
                   <xsl:value-of select="title" />
                 </span>
-                <div class="course-card-info">
+                <div class="course-card-info units-key-selector">
                   <span class="course-card-id">
                     <xsl:value-of select="crse" />
                   </span>
@@ -37,13 +75,13 @@
                 </div>
               </div>
               <div class="course-card-footer">
-                <div class="course-card-key-value">
+                <div class="course-card-key-value instructor-key-selector">
                   <span class="course-card-key">Instructor:</span>
                   <span class="course-card-value">
                     <xsl:value-of select="instructor" />
                   </span>
                 </div>
-                <div class="course-card-key-value">
+                <div class="course-card-key-value subj-key-selector">
                   <span class="course-card-key">Subject:</span>
                   <span class="course-card-value">
                     <xsl:value-of select="subj" />
